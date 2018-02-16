@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.auth0:auth0-servlet:3.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.auth0/auth0-servlet/3.0.0/40c2e4fec7f3be80a374d39010164fbcfe42db6/auth0-servlet-3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.auth0/auth0-servlet/3.0.0/bcacb1fab626d40da933ebe43494899d4c56f635/auth0-servlet-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

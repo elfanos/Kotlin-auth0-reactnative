@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.auth0:auth0-spring-security-api:1.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.auth0/auth0-spring-security-api/1.0.0/6ec5f76f5964d04edd4e9bd13f09ee5490200917/auth0-spring-security-api-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.auth0/auth0-spring-security-api/1.0.0/5e27ba3d5b497872eebe58c67336bdfaebde0066/auth0-spring-security-api-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
