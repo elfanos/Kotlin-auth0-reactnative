@@ -39,3 +39,17 @@ curl -H "Content-Type: application/json" -X POST -d '{
  "client_secret": "YOUR-CLIENT-SECRET"
 }' https://YOUR-AUTH0-DOAMIN/oauth/token
 ```
+
+Rember to use phiscal local ip instead of 
+localhost since emaluators use local service as well as physical
+phones like Iphone 6.
+
+May cause a network error when fetching data in the frontend
+```
+http://localhost:8080'
+```
+
+Is not going to cause a error if the IP is correct
+```
+http://192.168.1.YOUR-IP:8080'
+```

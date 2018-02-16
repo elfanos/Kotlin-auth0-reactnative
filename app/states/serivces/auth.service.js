@@ -2,7 +2,7 @@
  * Created by Rasmus on 2018-02-16.
  */
 import {
-    DEVELOPMENT
+    DEVELOPMENT_USER
 } from './api.constants'
 import axios from 'axios'
 
@@ -18,24 +18,11 @@ export const register = ( user ) => {
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify( newUser )
   };
-  console.log(" strinify user payload: " + JSON.stringify(newUser));
-  /*axios.post('http://localhost:8080/user', {
-        userName: user.username,
-        password: user.password
-      })
-      .then(function (response) {
-          console.log(response);
-      })
-      .catch(function (error) {
-          console.log(error);
-      })*/
-  return fetch( 'http://localhost:8080/user')
-      .then( function (response) {
-            return response.json();
-        })
+  return fetch( DEVELOPMENT_USER, requestOption)
+      .then( handleResponse )
       .catch(function(err){
             console.log("error: " + err);
-        })
+      })
 };
 
 let handleResponse = ( response ) => {
