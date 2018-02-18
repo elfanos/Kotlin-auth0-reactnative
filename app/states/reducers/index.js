@@ -3,9 +3,12 @@
  */
 import { combineReducers } from 'redux';
 import auth from './auth';
-
+import signtextinput from './signtextinput';
+import buttonSign from './buttonSign'
 const combinedReducer = combineReducers({
-    auth
+    auth,
+    signtextinput,
+    buttonSign
 });
 
 export default combinedReducer;

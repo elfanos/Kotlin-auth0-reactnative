@@ -12,7 +12,7 @@ import {
     Text
 } from 'react-native'
 
-const mapStateToProps = (state,ownProps) =>{
+const mapStateToProps = (state,ownProps) => {
     return {
         isLoggedIn: state.auth.isLoggedIn
     };

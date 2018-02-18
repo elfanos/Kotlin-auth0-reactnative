@@ -7,12 +7,16 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { login, signup, routehandler, register } from '../states/actions/auth';
 import * as color from './design/colors.hex';
+import LoginTextInput from './LoginTextInput';
+import ButtonSign from './ButtonSign';
 import {
     StyleSheet,
     View,
     Text,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Image,
+    ImageBackground
 } from 'react-native'
 import {Button, FormLabel, FormInput,FormValidationMessage } from 'react-native-elements';
 
@@ -32,6 +36,17 @@ const mapDispatchToProps = ( dispatch ) => {
     };
 };
 
+const defaultButtonSign = {
+    buttonStyle: {
+        borderBottomWidth: 2,
+        borderBottomColor: color.WHITE,
+    },
+     textStyle: {
+         color: color.BLACK,
+         fontWeight: "700",
+     }
+
+};
 class LoginView extends React.Component {
     constructor (props) {
         super(props);
@@ -62,75 +77,30 @@ class LoginView extends React.Component {
 
 
     };
-    signUpAndLoginClick = () =>{
-        console.log("change page");
-    };
   render() {
-      function checktext(text){
-          console.log("jaman?" + text);
-      }
-      function tempFunc(){
-          console.log("jaman?");
-      }
       return (
-          <View style={style.container}>
-              <View style={style.regform}>
-                  <Text style={style.header}>
-                      SudoAmp
-                  </Text>
+
+              <View style={style.container}>
+                  <ImageBackground source={require('../pictures/backgroundamp.png')} style={style.backgroundImage}>
+                  <View style={style.regform}>
+                      <Text style={style.header}>
+                          SudoAmp
+                      </Text>
+                  </View>
+                <View style={style.buttonForm}>
+                    <ButtonSign title="Sign In" borderColor={color.WHITE} textColor={color.BLACK} placeHolder="signin"/>
+                    <ButtonSign title="Sign Up" borderColor={color.WHITE} textColor={color.BLACK} placeHolder="signup"/>
+                </View>
+                <View style={style.regform}>
+                      <LoginTextInput borderColor={color.BLACK} placeHolder="Name"/>
+                    <LoginTextInput borderColor={color.BLACK} placeHolder="Password"/>
+
+                    <TouchableOpacity style={style.formButton}>
+                        <Text style={style.btnText}>LOG IN</Text>
+                    </TouchableOpacity>
+                </View>
+                  </ImageBackground>
               </View>
-            <View style={style.buttonForm}>
-                <Button title= "Sign In"
-                        onPress={(e) => {console.log("lolish")}}
-                        buttonStyle={{
-                            borderBottomWidth: 2,
-                            borderBottomColor: color.ORANGE,
-                          }}
-                        containerStyle={{
-                             borderBottomWidth: 2,
-                            borderBottomColor: color.ORANGE,
-
-                        }}
-                        textStyle={{
-                            color: color.BLACK,
-                            fontWeight: "700",
-                        }}
-                        backgroundColor={color.WHITE}
-                />
-                <Button title= "Sign Up"
-                        onPress={(e) => {console.log("lolish")}}
-                        buttonStyle={{
-                            borderBottomWidth: 2,
-                            borderBottomColor: color.ORANGE,
-                          }}
-                        containerStyle={{
-                             borderBottomWidth: 2,
-                            borderBottomColor: color.ORANGE,
-
-                        }}
-                        textStyle={{
-                            color: color.BLACK,
-                            fontWeight: "700",
-                        }}
-                        backgroundColor={color.WHITE}
-                />
-            </View>
-            <View style={style.regform}>
-                  <TextInput style={style.textinput}
-                             placeholder={"Name"}
-                             placeholderTextColor={color.WHITE}
-                  >
-                  </TextInput>
-                  <TextInput style={style.textinput}
-                             placeholder={"Password"}
-                             placeholderTextColor={color.WHITE}
-                  >
-                </TextInput>
-                <TouchableOpacity style={style.formButton}>
-                    <Text style={style.btnText}>LOG IN</Text>
-                </TouchableOpacity>
-            </View>
-          </View>
       );
   };
 }
@@ -145,6 +115,12 @@ LoginView.propTypes = {
 };
 LoginView = connect(mapStateToProps,mapDispatchToProps)(LoginView);
 const style = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover', // or 'stretch'
+        justifyContent: 'center',
+        flexDirection:'column'
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -168,31 +144,20 @@ const style = StyleSheet.create({
         alignContent: 'center',
         textAlign: 'center',
     },
-    textinput: {
-        width: 200,
-        height: 40,
-        paddingLeft: 30,
-        marginTop: 10,
-        color: color.WHITE,
-        borderColor: color.BLACK,
-        borderWidth: 1,
-        backgroundColor: color.BLACK,
-        borderRadius: 20,
-    },
     formButton: {
         width: 200,
         marginTop: 10,
         height: 40,
         backgroundColor: color.ORANGE,
-        alignItems: 'center',
         borderRadius: 20,
         borderWidth: 1,
         borderColor: color.ORANGE,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     btnText: {
         color: color.WHITE,
-        fontWeight: "700",
-        alignItems: 'center',
+        fontWeight: '700',
     }
 });
 export default LoginView;
