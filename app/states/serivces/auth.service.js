@@ -18,7 +18,7 @@ export const register = ( user ) => {
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify( newUser )
   };
-  return fetch( DEVELOPMENT_USER, requestOption)
+  return fetch( DEVELOPMENT_USER, requestOption )
       .then( handleResponse )
       .catch(function(err){
             console.log("error: " + err);
