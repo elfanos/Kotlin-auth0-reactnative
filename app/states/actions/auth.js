@@ -13,6 +13,7 @@ export const login = (username, password) => {
 export const register = ( username, password ) => {
     return {
         type: type.REGISTER,
+        email: email,
         username: username,
         password: password
     }

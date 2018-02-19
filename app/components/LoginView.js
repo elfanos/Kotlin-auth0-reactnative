@@ -22,9 +22,11 @@ import {Button, FormLabel, FormInput,FormValidationMessage } from 'react-native-
 
 const passwordValidation = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[0-9])");
 const mapStateToProps = ( state, ownProps ) => {
+    console.log("" + state.buttonSign.placeHolder);
     return{
         isLoggedIn: state.auth.isLoggedIn,
         route: state.auth.route,
+        signButtonState: state.buttonSign.placeHolder
     }
 };
 const mapDispatchToProps = ( dispatch ) => {
@@ -32,7 +34,7 @@ const mapDispatchToProps = ( dispatch ) => {
         onLogin: ( username, password ) => { dispatch( login( username, password ) ) },
         onSignUp: ( username, password ) => { dispatch( signup( username, password ) ) },
         onRoute: ( route ) => { dispatch( routehandler( route ) ) },
-        onRegister: ( username, password ) => { dispatch( register( username, password ) ) }
+        onRegister: ( username, password ) => { dispatch( register( username, password ) ) },
     };
 };
 
@@ -57,6 +59,9 @@ class LoginView extends React.Component {
             validationPassword: ''
         };
     }
+    componentDidMount(){
+
+    }
     userLogin = (e) => {
         //this.props.onLogin(this.state.username, this.state.password);
        if(this.validationError(this.password) === "SUCCESS") {
@@ -78,27 +83,45 @@ class LoginView extends React.Component {
 
     };
   render() {
-      return (
+      function checkSignUpOrSignIn(signState) {
+          console.log("wat is da state: " + signState)
+          if(signState === 'signin'){
+              return (
+                  <View style={style.regform}>
+                      <LoginTextInput borderColor={color.BLACK} placeHolder="Name"/>
+                      <LoginTextInput borderColor={color.BLACK} placeHolder="Password"/>
 
+                      <TouchableOpacity style={style.formButton}>
+                          <Text style={style.btnText}>LOG IN</Text>
+                      </TouchableOpacity>
+                  </View>
+              );
+
+          }else if(signState === 'signup'){
+              return (
+                  <View style={style.regform}>
+                    <LoginTextInput borderColor={color.BLACK} placeHolder="Name"/>
+                    <LoginTextInput borderColor={color.BLACK} placeHolder="Password"/>
+                    <LoginTextInput borderColor={color.BLACK} placeHolder="Re-type Password"/>
+
+                  <TouchableOpacity style={style.formButton}>
+                      <Text style={style.btnText}>SIGN UP</Text>
+                  </TouchableOpacity>
+                  </View>
+              );
+          }
+      }
+      return (
               <View style={style.container}>
                   <ImageBackground source={require('../pictures/backgroundamp.png')} style={style.backgroundImage}>
-                  <View style={style.regform}>
                       <Text style={style.header}>
                           SudoAmp
                       </Text>
-                  </View>
-                <View style={style.buttonForm}>
-                    <ButtonSign title="Sign In" borderColor={color.WHITE} textColor={color.BLACK} placeHolder="signin"/>
-                    <ButtonSign title="Sign Up" borderColor={color.WHITE} textColor={color.BLACK} placeHolder="signup"/>
-                </View>
-                <View style={style.regform}>
-                      <LoginTextInput borderColor={color.BLACK} placeHolder="Name"/>
-                    <LoginTextInput borderColor={color.BLACK} placeHolder="Password"/>
-
-                    <TouchableOpacity style={style.formButton}>
-                        <Text style={style.btnText}>LOG IN</Text>
-                    </TouchableOpacity>
-                </View>
+                        <View style={style.buttonForm}>
+                            <ButtonSign title="Sign In" borderColor={color.WHITE} textColor={color.BLACK} placeHolder="signin"/>
+                            <ButtonSign title="Sign Up" borderColor={color.WHITE} textColor={color.BLACK} placeHolder="signup"/>
+                        </View>
+                        {checkSignUpOrSignIn(this.props.signButtonState)}
                   </ImageBackground>
               </View>
       );
@@ -110,6 +133,7 @@ LoginView.propTypes = {
     onSignUp: PropTypes.func.isRequired,
     onRoute: PropTypes.func.isRequired,
     onRegister: PropTypes.func.isRequired,
+    signButtonState: PropTypes.string,
     route: PropTypes.string,
     username: PropTypes.string,
 };
@@ -125,10 +149,11 @@ const style = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         backgroundColor: color.WHITE,
-        flexDirection:'column'
+        flexDirection:'column',
+        marginTop: -200,
     },
     regform: {
-        justifyContent: 'center',
+        flex: 1,
         alignItems: 'center'
     },
     buttonForm: {
@@ -136,6 +161,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 10,
+        maxHeight: 50
     },
     header: {
         fontSize: 24,

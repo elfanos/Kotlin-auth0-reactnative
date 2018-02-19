@@ -5,7 +5,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import {onblur,onfocus} from '../states/actions/signtextinput.action'
 import { onclick } from '../states/actions/buttonSign.action'
 import * as color from './design/colors.hex';
 import {
@@ -44,10 +43,12 @@ const mapStateToProps = ( state, ownProps ) => {
 };
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        onClick: ( borderColor, textColor ,placeHolder ) => { dispatch( onclick( borderColor, textColor,  placeHolder ) ) }
+        onClick: ( borderColor, textColor ,placeHolder ) => {
+            dispatch( onclick( borderColor, textColor,  placeHolder ) );
+        }
     }
 };
-let ButtonSign = ({ borderColor, onClick, placeHolder, title }) => {
+let ButtonSign = ({ borderColor, onClick, placeHolder, title}) => {
     return (
         <View style={style.buttonForm}>
             <Button title= {title}

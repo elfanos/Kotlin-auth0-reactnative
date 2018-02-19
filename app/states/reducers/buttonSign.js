@@ -3,9 +3,9 @@
  */
 import * as type from '../constants/buttonSign.constants'
 const defaultState = {
-    borderColor: '',
-    actionColor: '',
-    placeHolder: '',
+    borderColor: '#FCAA67',
+    textColor: '#FCAA67',
+    placeHolder: 'signin',
 };
 const reducer = ( state = defaultState, action ) => {
     switch ( action.type ) {
