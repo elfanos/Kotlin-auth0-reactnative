@@ -3,7 +3,7 @@
  */
 import {
     DEVELOPMENT_USER
-} from './api.constants'
+} from './api.constant'
 import axios from 'axios'
 
 export const register = ( user ) => {
@@ -13,12 +13,12 @@ export const register = ( user ) => {
         userName: user.username,
         password: user.password
     };
-  const requestOption = {
+    const requestOption = {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify( newUser )
-  };
-  return fetch( DEVELOPMENT_USER, requestOption )
+    };
+    return fetch( DEVELOPMENT_USER, requestOption )
       .then( handleResponse )
       .catch(function(err){
             console.log("error: " + err);

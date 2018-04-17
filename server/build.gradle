@@ -1,6 +1,6 @@
 buildscript {
-    ext.kotlin_version = '1.1.3' // Required for Kotlin integration
-    ext.spring_boot_version = '1.5.4.RELEASE'
+    ext.kotlin_version = '1.2.20' // Required for Kotlin integration
+    ext.spring_boot_version = '2.0.1.RELEASE'
     repositories {
         jcenter()
     }
@@ -8,12 +8,28 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Required for Kotlin integration
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+
     }
 }
 
 apply plugin: 'kotlin' // Required for Kotlin integration
 apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
 
 jar {
     baseName = 'gs-rest-service'
@@ -24,18 +40,48 @@ repositories {
     jcenter()
 }
 
+sourceSets {
+
+    main.java.srcDir "src/main/kotlin"
+    main.resources.srcDir "src/main/resources"
+    test.java.srcDir "src/test/kotlin"
+    //test.resources.srcDir "src/test/resources"
+}
+
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-tomcat')
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.jetbrains.kotlin:kotlin-reflect")
+
     // https://mvnrepository.com/artifact/com.auth0/auth0-spring-security-api
     compile 'com.auth0:auth0-spring-security-api:1.0.0'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.2.5.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.1.RELEASE'
     // https://mvnrepository.com/artifact/com.auth0/auth0-servlet
     compile group: 'com.auth0', name: 'auth0-servlet', version: '3.0.0'
     // https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java
     compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.3.1'
+
+    compile 'com.google.api-client:google-api-client:1.23.0'
+
+    compile 'com.google.apis:google-api-services-youtube:v3-rev193-1.23.0'
+
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+
+
+    testCompile "junit:junit:4.12"
+
+   // testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-M4")
+  //  testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-M4")
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    testCompile group: 'com.h2database', name: 'h2', version: '1.3.164'
+
+    testCompile('org.jetbrains.kotlin:kotlin-test')
+    testCompile('org.jetbrains.kotlin:kotlin-test-junit')
+    testCompile('com.github.fakemongo:fongo:2.2.0-RC1')
 }

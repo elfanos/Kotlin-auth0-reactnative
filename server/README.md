@@ -40,7 +40,7 @@ curl -H "Content-Type: application/json" -X POST -d '{
 }' https://YOUR-AUTH0-DOAMIN/oauth/token
 ```
 
-Rember to use phiscal local ip instead of 
+Remember to use a physical local ip instead of 
 localhost since emaluators use local service as well as physical
 phones like Iphone 6.
 
@@ -52,4 +52,19 @@ http://localhost:8080'
 Is not going to cause a error if the IP is correct
 ```
 http://192.168.1.YOUR-IP:8080'
+```
+
+Mongo commands
+```
+    Start mongo in terminal by writing: mongo
+    Check all collcetions: show collections
+    Some usefull commands:
+    mongo db."selected collection".findAll()
+    mong db."selected collection".find()
+```
+
+Gradle tests:
+```
+    ./gradlew test //run all test
+    ./gradlew test --test package.testclass //for individual tests
 ```

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.fakemongo:fongo:2.2.0-RC1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.fakemongo/fongo/2.2.0-RC1/66b5efb5d1f32e84e962d5cee8d9289a6493f6dd/fongo-2.2.0-RC1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.fakemongo/fongo/2.2.0-RC1/eef04a7af3137af2618ac553adbf306a99cbb79/fongo-2.2.0-RC1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

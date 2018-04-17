@@ -1,8 +1,7 @@
 package org.jetbrains.kotlin.demo.DBCalls
 
-import org.jetbrains.kotlin.demo.models.NewUser
-import org.jetbrains.kotlin.demo.models.User
-import org.springframework.data.annotation.Id
+import org.jetbrains.kotlin.demo.user.NewUser
+import org.jetbrains.kotlin.demo.user.User
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.PostMapping
 
@@ -30,8 +29,8 @@ class UserController {
     }*/
 
     @PostMapping( path = arrayOf("/user") )
-    fun postUser( @RequestBody user: NewUser ): User {
-        return User (
+    fun postUser( @RequestBody user: NewUser): User {
+        return User(
                 Id = "",
                 userName = user.userName,
                 password = user.password

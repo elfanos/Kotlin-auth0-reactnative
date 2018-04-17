@@ -114,6 +114,11 @@ class LoginView extends React.Component {
       return (
               <View style={style.container}>
                   <ImageBackground source={require('../pictures/backgroundamp.png')} style={style.backgroundImage}>
+                        <View style={style.regform}>
+                            <Text style={style.header}>
+                                SudoAmp
+                            </Text>
+                        </View>
                       <Text style={style.header}>
                           SudoAmp
                       </Text>
@@ -150,7 +155,7 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: color.WHITE,
         flexDirection:'column',
-        marginTop: -200,
+        marginTop: -300,
     },
     regform: {
         flex: 1,
