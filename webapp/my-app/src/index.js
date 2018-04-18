@@ -7,6 +7,9 @@ import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import store from './states/index'
 
+
+import 'font-awesome/css/font-awesome.css';
+
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>

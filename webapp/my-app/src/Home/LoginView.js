@@ -10,8 +10,13 @@ import { withRouter } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import FontIcon from 'material-ui/FontIcon';
 import AppBar from 'material-ui/AppBar';
 import * as api from '../backend-api/users/users.api.constant';
+
+import FontAwesome from 'react-fontawesome';
+
 
 const passwordValidation = new RegExp("^(?=.{8,})(?=.*[0-9])");
 
@@ -111,12 +116,10 @@ class LoginView extends React.Component {
                             }/>
                         <br/>
                         <RaisedButton
-                            label="submit"
-                            primary={true}
-                            style={style}
-                            onClick={
-                                (event) => this.handleClick(event)
-                            }
+                            target="_blank"
+                            label="Login with spotify"
+                            secondary={true}
+                            icon={<FontAwesome name='spotify'/>}
                         />
                     </div>
                 </MuiThemeProvider>
