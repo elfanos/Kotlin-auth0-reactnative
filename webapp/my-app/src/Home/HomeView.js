@@ -8,6 +8,7 @@ import { PropTypes } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import  LoginView  from './LoginView';
 import UserView from './UserView';
+import Route from 'react-router-dom/Route';
 
 const mapStateToProps = ( state ) => {
     console.log( state.auth.isLoggedIn );
@@ -17,8 +18,9 @@ const mapStateToProps = ( state ) => {
 };
 
 let HomeView = ({isLoggedIn}) => {
-    if( !isLoggedIn ) { return( <LoginView/> ); }
-    else{ return( <UserView/> ); }
+   return(
+       <Route exact path="/home/login" component={LoginView}/>
+   );
 
 };
 
@@ -26,7 +28,5 @@ HomeView.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired
 };
 
-
-HomeView = withRouter(connect(mapStateToProps)(HomeView));
-export default HomeView;
+export default withRouter(connect(mapStateToProps)(HomeView));
 

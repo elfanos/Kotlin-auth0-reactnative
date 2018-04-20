@@ -1,5 +1,5 @@
 package spotifytest
-import org.jetbrains.kotlin.demo.service.InitiSpotifySerivce
+import org.jetbrains.kotlin.demo.service.InitSpotifyCCFSerivce
 import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runners.MethodSorters
@@ -11,9 +11,10 @@ import kotlin.test.assertNotNull
  * Created by Rasmus on 2018-04-18.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class SpotifyServiceTest {
+class SpotifyServiceTestCCF {
 
-   var spotifiyService: InitiSpotifySerivce = InitiSpotifySerivce()
+    var spotifiyService: InitSpotifyCCFSerivce = InitSpotifyCCFSerivce()
+    //var spotifyACFService: InitSpotifyACFService = InitSpotifyACFService();
 
     @Test
     fun testAAuthorizationToken(){
@@ -25,7 +26,12 @@ class SpotifyServiceTest {
     }
 
     @Test
-    fun testB(){
+    fun testBAuthorizationTokenACFService(){
+       /* logger.info("Begin testing authorization test ACF")
+        val authorization = spotifyACFService.authorizationCodeUriSync();
+        println("hola: acf: " + authorization)
+        assertNotNull(authorization)
+        logger.info("end testing authorization test ACF")*/
 
     }
     @Test
@@ -34,6 +40,6 @@ class SpotifyServiceTest {
     }
     companion object {
         val logger: Logger =
-                LoggerFactory.getLogger(SpotifyServiceTest::class.java)
+                LoggerFactory.getLogger(SpotifyServiceTestCCF::class.java)
     }
 }

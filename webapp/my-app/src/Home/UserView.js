@@ -18,14 +18,14 @@ const mapDispatchToProps = (  ) => {
 class UserView extends React.Component {
     render(){
         return(
-          <p>
-              hejhej
-          </p>
+            <div>
+                <p>
+                    hadejhej
+                </p>
+            </div>
         );
     }
 
 }
 
-UserView = withRouter(connect(mapStateToProps,mapDispatchToProps)(UserView));
-
-export default UserView;
+export default  withRouter(connect(mapStateToProps,mapDispatchToProps)(UserView));

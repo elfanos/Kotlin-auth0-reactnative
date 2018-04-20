@@ -44,10 +44,6 @@ let handleResponse = ( response ) => {
 
 class App extends React.Component {
   render() {
-    //let response = getUser();
-    //console.log(response);
-    //let jaman = test();
-   // console.log(jaman);
     return (
       <HomeView />
     );

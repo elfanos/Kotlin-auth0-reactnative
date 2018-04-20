@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import AppBar from 'material-ui/AppBar';
 import * as api from '../backend-api/users/users.api.constant';
+import * as spotifyApi from '../backend-api/spotify/spotify.api.constants';
 
 import FontAwesome from 'react-fontawesome';
 
@@ -50,20 +51,35 @@ const handleResponse = ( response ) => {
     }
 };
 class LoginView extends React.Component {
+
+    previousLocation = this.props.location;
+
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             password: '',
+            userNameState: '',
+            passwordState: '',
             errorTextPassword: '',
             errorTextUsername: '',
             userFunc: null
         }
 
     }
+    componentWillUpdate(nextProps) {
+        const { location } = this.props;
+        // set previousLocation if props.location is not modal
+        if (
+            nextProps.history.action !== "POP" &&
+            (!location.state || !location.state.modal)
+        ) {
+            this.previousLocation = this.props.location;
+        }
+    }
+
     handlePasswordValidation(event, value){
-        console.log("password " + value);
-        console.log(this.props.users);
+        this.setState({passwordState: value});
         if(value.match(passwordValidation)){
             this.setState({errorTextPassword: ""});
         }else{
@@ -73,7 +89,12 @@ class LoginView extends React.Component {
                 );
         }
     }
-    async handleUsernameValidation(event, value){
+    handleUsernameValidation(event, value){
+        this.setState({userNameState:value});
+        this.userNameValidation(value)
+    
+    }
+    async userNameValidation(value){
         let checkUserName = this.props.users.then(function ( response ) {
             return response.find(function (responseValue) {
                 return  value === responseValue.userName
@@ -83,11 +104,34 @@ class LoginView extends React.Component {
 
         if(response !== undefined){ this.props.checkIfExist( true, true );
         }else{ this.props.checkIfExist( true, false ); }
-    
     }
-    handleClick(e){
-        console.log(this.state);
+    async spotifyCallback() {
+        window.location.href = await fetch(spotifyApi.callBackUri())
+            .then(function (response) {
+                if(!response.ok){
+                    return Promise.reject(response.statusText).json()
+                }else{
+                    return response.text()
+                }
+            });
+    }
 
+    handleLogin(){
+        this.spotifyCallback();
+    }
+    //Reset error text and other stuffs
+    handleBlurUserName(){
+        this.props.checkIfExist( true, false );
+    }
+    handleFocusUserName(event){
+        this.handleUsernameValidation(event,this.state.userNameState);
+    }
+
+    handleBlurPassword(){
+        this.setState( {errorTextPassword: "" } );
+    }
+    handleFocusPassword(event){
+        this.handlePasswordValidation(event, this.state.passwordState);
     }
     render() {
 
@@ -101,15 +145,20 @@ class LoginView extends React.Component {
                             hintText="Enter your Username"
                             floatingLabelText="Username"
                             errorText={this.props.userError}
+                            onBlur={ () => this.handleBlurUserName() }
+                            onFocus={ ( event ) => this.handleFocusUserName( event ) }
                             onChange={
                                 (event, newValue) =>
                                 this.handleUsernameValidation(event, newValue)
-                            }/>
+                                 }
+                            />
                         <br/>
                         <TextField
                             hintText="Enter your Password"
                             floatingLabelText="Password"
                             errorText={this.state.errorTextPassword}
+                            onBlur={ () => this.handleBlurPassword() }
+                            onFocus={ ( event ) => this.handleFocusPassword( event ) }
                             onChange={
                                 (event, newValue) =>
                                 this.handlePasswordValidation(event, newValue)
@@ -120,6 +169,7 @@ class LoginView extends React.Component {
                             label="Login with spotify"
                             secondary={true}
                             icon={<FontAwesome name='spotify'/>}
+                            onClick={() => this.handleLogin()}
                         />
                     </div>
                 </MuiThemeProvider>
@@ -139,5 +189,4 @@ LoginView.propTypes = {
     userValid: PropTypes.bool.isRequired,
     userError: PropTypes.string.isRequired
 };
-LoginView = withRouter(connect(mapStateToProps,mapDispatchToProps)(LoginView));
-export default LoginView;
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(LoginView));
