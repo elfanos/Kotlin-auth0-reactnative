@@ -7,19 +7,20 @@ import { register, loginUserNameValid } from '../services/auth.service'
 const defaultState = {
     isLoggedIn: false,
     username: '',
-    password: ''
+    password: '',
+    code: ''
 };
 const reducer = ( state = defaultState, action ) => {
-    console.log("in reducers");
     console.log(action);
-    console.log(state);
     switch ( action.type ) {
         case type.LOGIN:
            return {
                ...state,
                isLoggedIn: true,
                username: action.username,
-               password: action.password
+               password: action.password,
+               code: action.code
+
            };
         case type.LOGOUT:
             return {
@@ -35,7 +36,7 @@ const reducer = ( state = defaultState, action ) => {
                 password: action.password
             };
         default:
-            return { ...state };
+            return state;
     }
 };
 

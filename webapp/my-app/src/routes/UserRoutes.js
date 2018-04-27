@@ -7,7 +7,6 @@ import {
     Route
 
 } from 'react-router-dom'
-import UserView from '../Home/UserView';
 export const UserRoutes = () => {
     return (
        /* <Switch>

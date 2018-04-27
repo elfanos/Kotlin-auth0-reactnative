@@ -6,8 +6,6 @@ import {
     Switch,
     Route,
 } from 'react-router-dom'
-import HomeView from '../Home/UserView';
-import LoginView from'../Home/LoginView';
 
 export const HomeRoutes = () => {
     return (

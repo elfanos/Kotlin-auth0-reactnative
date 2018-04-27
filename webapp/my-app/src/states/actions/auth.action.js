@@ -4,12 +4,12 @@
 
 import * as type from '../constants/auth.constant';
 
-export const login = ( username, password ) => {
-    console.log(username,password);
+export const login = ( username, password, code ) => {
     return {
         type: type.LOGIN,
         username: username,
-        password: password
+        password: password,
+        code: code
     }
 };
 export const logout = ( username ) => {

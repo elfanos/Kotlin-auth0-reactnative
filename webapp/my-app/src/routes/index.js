@@ -9,25 +9,23 @@ import {
     Route
 
 } from 'react-router-dom';
-import HomeRoutes from './HomeRoutes';
-import UserRoutes from './UserRoutes';
-import  store  from '../states/index'
-import UserView from '../Home/UserView';
-import HomeView from '../Home/HomeView';
-import LoginView from '../Home/LoginView'
-import SpotifyAuth from './auth/spotify.auth';
-
+import SpotifyAuth from './auth/SpotifyAuth';
+import { PersistGate } from 'redux-persist/integration/react'
+import Modules from './Modules'
+import  Store  from '../states/ConfigureStore'
 export const ApplicationRouter = () =>{
     return (
-        <Provider store = {store} >
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/login" component={LoginView}/>
-                    <Route exact path="/home" component={HomeView}/>
-                    <Route exact path="/auth/spotify/callback" component={SpotifyAuth}/>
-                    <Route exact path="/user" component={UserView}/>
-                </Switch>
-            </BrowserRouter>
+        <Provider store ={Store.store} >
+            <PersistGate persistor={Store.persistor}>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path="/login" component={Modules.LoginView}/>
+                        <Route exact path="/home" component={Modules.HomeView}/>
+                        <Route exact path="/auth/spotify/callback" component={SpotifyAuth}/>
+                        <Route exact path="/user" component={Modules.UserView}/>
+                    </Switch>
+                </BrowserRouter>
+            </PersistGate>
         </Provider>
     );
 };

@@ -1,9 +1,7 @@
 package org.jetbrains.kotlin.demo.controller
 
-import jdk.nashorn.internal.parser.JSONParser
 import org.jetbrains.kotlin.demo.service.InitSpotifyACFService
-import org.jetbrains.kotlin.demo.service.SpotifyACFService
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -18,6 +16,13 @@ class SpotifyController {
     @RequestMapping("/api/spotify/callback/uri")
     fun authorizationUri(): String? {
         return spotifyACFService.authorizationCodeUriSync()
+    }
+
+    @RequestMapping("api/spotify/token/{code}")
+    fun authorizationToken(@PathVariable code: String): List<String>? {
+        val authorizationCodeRequest =
+                spotifyACFService.buildAuthorizationCode(code)
+        return spotifyACFService.authorizationCodeSync(authorizationCodeRequest)
     }
 
 }

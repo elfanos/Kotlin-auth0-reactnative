@@ -10,11 +10,9 @@ import { withRouter } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import FontIcon from 'material-ui/FontIcon';
 import AppBar from 'material-ui/AppBar';
-import * as api from '../backend-api/users/users.api.constant';
-import * as spotifyApi from '../backend-api/spotify/spotify.api.constants';
+import * as api from '../backend-api/users.api.constant';
+import * as spotifyApi from '../backend-api/spotify.api.constants';
 
 import FontAwesome from 'react-fontawesome';
 
@@ -23,7 +21,7 @@ const passwordValidation = new RegExp("^(?=.{8,})(?=.*[0-9])");
 
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        onLogin: ( username, password ) => { dispatch( login( username, password ) ) },
+        onLogin: ( username, password, code ) => { dispatch( login( username, password, code ) ) },
         checkIfExist: ( isValid, doesExist ) => { dispatch( checkIfExist( isValid, doesExist) ) }
     };
 };
@@ -69,7 +67,6 @@ class LoginView extends React.Component {
     }
     componentWillUpdate(nextProps) {
         const { location } = this.props;
-        // set previousLocation if props.location is not modal
         if (
             nextProps.history.action !== "POP" &&
             (!location.state || !location.state.modal)
@@ -118,6 +115,7 @@ class LoginView extends React.Component {
 
     handleLogin(){
         this.spotifyCallback();
+        this.props.onLogin("aw","dad","adw");
     }
     //Reset error text and other stuffs
     handleBlurUserName(){

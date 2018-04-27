@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import  HomeView  from './Home/HomeView'
+import  HomeView  from './Components/Home/HomeView'
 
 
 /*async getUsers = () => {

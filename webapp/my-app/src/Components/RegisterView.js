@@ -13,11 +13,11 @@ import icon from 'material-ui/svg-icons'
 
 const mapDispatchToProps = () => {
 
-}
+};
 
 const mapStateToProps = () => {
 
-}
+};
 
 
 let RegisterView = ({}) => {
