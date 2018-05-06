@@ -10,7 +10,7 @@ import {
 
 } from 'react-router-dom';
 import HomeView from '../components/home/home.component';
-import LoginView from '../components/login.component';
+import LoginView from '../components/login/view/login.view';
 import SpotIfy from '.././api/controller/spotify.auth.controller';
 import { PersistGate } from 'redux-persist/integration/react';
 import  Store  from '../states/store';

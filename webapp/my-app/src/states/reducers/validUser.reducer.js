@@ -1,9 +1,9 @@
 /**
  * Created by Rasmus on 2018-04-17.
  */
-import { checkIfValid, checkIfExist } from '../actions/validUser.action';
-import * as type from '../constants/validUser.constant';
-import * as service from '../services/validUser.service';
+import { checkIfValid, checkIfExist } from '../actions/validuser.action';
+import * as type from '../constants/validuser.constant';
+import * as service from '../services/validuser.service';
 const defaultState = {
 	type: '',
 	isValid: true,
@@ -18,14 +18,14 @@ const reducer = ( state = defaultState, action ) => {
 			...state,
 			isValid: action.isValid,
 			doesExist: action.doesExist,
-			reason: service.errorTextDoesExist( action.doesExist )
+			reason: service.errorText( type.DOES_EXIST, action.doesExist )
 		};
 	case type.CHECK_VALID:
 		return {
 			...state,
 			isValid: action.isValid,
 			doesExist: action.doesExist,
-			reason: service.errorTextIsValid( action.isValid )
+			reason: service.errorText( type.CHECK_VALID, action.isValid)
 		};
             
 	default:

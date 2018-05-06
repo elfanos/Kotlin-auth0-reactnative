@@ -3,7 +3,7 @@
  */
 import { combineReducers } from 'redux';
 import auth from './auth.reducer';
-import validUser from './validUser.reducer';
+import validUser from './validuser.reducer';
 import user from './user.reducer';
 
 export default combineReducers({

@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { login } from '../states/actions/auth.action';
-import { checkIfExist } from '../states/actions/validUser.action';
+import { login } from '../../../states/actions/auth.action';
+import { checkIfExist } from '../../../states/actions/validuser.action';
 import { withRouter } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
-import * as api from '../api/backend.api.constants/users.api.constant';
-import * as spotIfyApi from '../api/backend.api.constants/spotify.api.constants';
+import * as api from '../../../api/backend.api.constants/users.api.constant';
+import * as spotIfyApi from '../../../api/backend.api.constants/spotify.api.constants';
 import FontAwesome from 'react-fontawesome';
 
 const passwordValidation = new RegExp('^(?=.{8,})(?=.*[0-9])');
@@ -31,7 +31,7 @@ let getExistingUserNames = async( ) => {
 const mapDispatchToProps = ( dispatch ) => {
 	return {
 		onLogin: ( username, password, code ) => { dispatch( login( username, password, code ) ); },
-		checkIfExist: ( isValid, doesExist ) => { dispatch( checkIfExist( isValid, doesExist) ); }
+		checkIfExist: ( doesExist ) => { dispatch( checkIfExist( doesExist) ); }
 	};
 };
 const mapStateToProps = ( state ) => {
@@ -91,11 +91,13 @@ class LoginView extends React.Component {
     	let response = await checkUserName;
 
     	if(response !== undefined){ 
-    		this.props.checkIfExist( true, true );
+    		this.props.checkIfExist( true );
     	} else { 
-    		this.props.checkIfExist( true, false ); 
+    		this.props.checkIfExist( false );
     	}
     }
+
+    //Relocated to the called spotify uri to login with spotify
     async spotifyCallback() {
     	window.location.href = await fetch(spotIfyApi.callBackUri())
     		.then(function (response) {
@@ -113,7 +115,7 @@ class LoginView extends React.Component {
     }
     //Reset error text and other stuffs
     handleBlurUserName(){
-    	this.props.checkIfExist( true, false );
+    	this.props.checkIfExist( false );
     }
     handleFocusUserName(event){
     	this.handleUsernameValidation(event,this.state.userNameState);

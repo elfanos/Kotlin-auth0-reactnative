@@ -1,18 +1,16 @@
 /**
  * Created by Rasmus on 2018-04-17.
  */
-import * as type from '../constants/validUser.constant';
-export const checkIfValid = ( isValid , doesExist ) => {
+import * as type from '../constants/validuser.constant';
+export const checkIfValid = ( isValid ) => {
 	return {
 		type: type.CHECK_VALID,
-		isValid: isValid,
-		doesExist: doesExist
+		isValid: isValid
 	};
 };
-export const checkIfExist = ( isValid, doesExist ) => {
+export const checkIfExist = ( doesExist ) => {
 	return {
 		type: type.DOES_EXIST,
-		isValid: isValid,
 		doesExist: doesExist
 	};
 };
