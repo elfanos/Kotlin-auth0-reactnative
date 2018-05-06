@@ -15,3 +15,47 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# JetBrain's Idea specific stuff #
+
+.idea*
+*.iml
+
+# IntelliJ
+/out/
+
+
+*.class
+browscap.csv
+gradle/wrapper
+gradlew.bat
+gradlew
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.db
+
+######################
+# OSX
+######################
+
+.DS_Store
+.svn
+
+# Thumbnails
+._*
+
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
+
+# Mongo Explorer plugin:
+.idea/mongoSettings.xml
+
+#secrets back-end
+server/src/main/resources/values/secrets.xml
+server/src/main/resources/application.properties
+server/src/main/resources/client_secret.json
+server/src/main/client_secret.json
