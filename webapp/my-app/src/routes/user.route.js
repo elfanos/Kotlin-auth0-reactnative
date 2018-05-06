@@ -3,17 +3,17 @@
  */
 import React from 'react';
 import {
-    Switch,
-    Route
+	Switch,
+	Route
 
-} from 'react-router-dom'
+} from 'react-router-dom';
 export const UserRoutes = () => {
-    return (
-       /* <Switch>
+	return (
+	/* <Switch>
             <Route path=":user/home" exact component={UserView}/>
         </Switch>*/
-       <div></div>
-    );
+		<div></div>
+	);
 };
 
 export default UserRoutes;

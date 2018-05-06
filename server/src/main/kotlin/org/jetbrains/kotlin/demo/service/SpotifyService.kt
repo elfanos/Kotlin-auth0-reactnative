@@ -8,8 +8,6 @@ import com.wrapper.spotify.model_objects.credentials.ClientCredentials
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest
 import java.io.IOException
-import java.net.URI
-import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 
 /**

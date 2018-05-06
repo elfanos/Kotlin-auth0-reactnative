@@ -3,12 +3,12 @@
  */
 import { combineReducers } from 'redux';
 import auth from './auth.reducer';
-import validUser from './validUser.reducer'
-import user from './user.reducer'
+import validUser from './validUser.reducer';
+import user from './user.reducer';
 
 export default combineReducers({
-    auth,
-    validUser,
-    user
+	auth,
+	validUser,
+	user
 });
 

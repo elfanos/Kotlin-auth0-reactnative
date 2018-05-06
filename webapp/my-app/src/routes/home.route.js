@@ -3,17 +3,17 @@
  */
 import React from 'react';
 import {
-    Switch,
-    Route,
-} from 'react-router-dom'
+	Switch,
+	Route,
+} from 'react-router-dom';
 
 export const HomeRoutes = () => {
-    return (
-        /*<Switch>
+	return (
+	/*<Switch>
             <Route path="/home/login" exact component={LoginView} />
         </Switch>*/
-        <div/>
-    );
+		<div/>
+	);
 };
 
 export default HomeRoutes;
