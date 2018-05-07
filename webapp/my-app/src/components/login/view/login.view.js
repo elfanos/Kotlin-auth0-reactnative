@@ -2,43 +2,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { login } from '../../../states/actions/auth.action';
-import { checkIfExist } from '../../../states/actions/validuser.action';
+import { validationCheck,noValidation } from '../../../states/actions/validation.action';
 import { withRouter } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
-import * as api from '../../../api/backend.api.constants/users.api.constant';
-import * as spotIfyApi from '../../../api/backend.api.constants/spotify.api.constants';
+import { spotifyCallback } from '../../../api/services/spotify.services';
 import FontAwesome from 'react-fontawesome';
+import * as validation from '../../../states/constants/validation.constant';
+import { getSpecificValueFromPromise } from '../../../prototypes/api.data.prototype';
+import {validationUsername, validationPassword, getExistingUserNames } from '../controller/login.controller';
 
 const passwordValidation = new RegExp('^(?=.{8,})(?=.*[0-9])');
-const handleResponse = ( response ) => {
-	if(!response.ok){
-		return Promise.reject(response.statusText).json();
-	}else{
-		return response.json();
-	}
-};
-//Get existing user from the api
-let getExistingUserNames = async( ) => {
-	return await fetch(api.get_all_usernames())
-		.then(handleResponse)
-		.catch(function (error) {
-			console.log('error ' + error);
-		});
-};
+
 const mapDispatchToProps = ( dispatch ) => {
 	return {
 		onLogin: ( username, password, code ) => { dispatch( login( username, password, code ) ); },
-		checkIfExist: ( doesExist ) => { dispatch( checkIfExist( doesExist) ); }
+		validationCheck: ( validationFunc, validationData, message ) =>
+		{ dispatch( validationCheck( validationFunc, validationData, message ) ); },
+		noValidation: () => { dispatch( noValidation() );  }
 	};
 };
 const mapStateToProps = ( state ) => {
+	console.log( state );
 	return {
-		users: getExistingUserNames(),
-		userValid: state.validUser.doesExist,
-		userError: state.validUser.reason
+		userError:  validationUsername(state.validUser.message),
+        passwordError: validationPassword(state.validUser.message)
 	};
 };
 class LoginView extends React.Component {
@@ -46,15 +36,9 @@ class LoginView extends React.Component {
     constructor(props) {
     	super(props);
     	this.state = {
-    		username: '',
-    		password: '',
     		userNameState: '',
     		passwordState: '',
-    		errorTextPassword: '',
-    		errorTextUsername: '',
-    		userFunc: null
     	};
-
     }
     componentWillUpdate(nextProps) {
     	const { location } = this.props;
@@ -68,61 +52,39 @@ class LoginView extends React.Component {
 
     handlePasswordValidation(event, value){
     	this.setState({passwordState: value});
-    	if(value.match(passwordValidation)){
-    		this.setState({errorTextPassword: ''});
-    	}else{
-    		this.setState(
-    			{errorTextPassword: 'Password need to be ' +
-                'atleast 8 character long and contain a number'}
-    		);
-    	}
+        this.props.validationCheck(
+			value => !value.match(passwordValidation),
+			value, validation.PASSWORD_REGULATION_MESSAGE_OBJECT
+        );
     }
-    handleUsernameValidation(event, value){
+    handleUsernameValidation( value ) {
     	this.setState({userNameState:value});
-    	this.userNameValidation(value);
-    
+    	let {} = this.userNameValidation(value);
     }
-    async userNameValidation(value){
-    	let checkUserName = this.props.users.then(function ( response ) {
-    		return response.find(function (responseValue) {
-    			return  value === responseValue.userName;
-    		});
-    	}).then(data =>{ return data;});
-    	let response = await checkUserName;
-
-    	if(response !== undefined){ 
-    		this.props.checkIfExist( true );
-    	} else { 
-    		this.props.checkIfExist( false );
-    	}
+    async userNameValidation( value ){
+    	let username = await getSpecificValueFromPromise(
+			data => value === data.userName,
+			getExistingUserNames(), value
+		);
+        this.props.validationCheck(
+			value => value !== undefined,
+			username, validation.USERNAME_EXIST_MESSAGE_OBJECT
+        );
     }
-
-    //Relocated to the called spotify uri to login with spotify
-    async spotifyCallback() {
-    	window.location.href = await fetch(spotIfyApi.callBackUri())
-    		.then(function (response) {
-    			if(!response.ok){
-    				return Promise.reject(response.statusText).json();
-    			}else{
-    				return response.text();
-    			}
-    		});
-    }
-
     handleLogin(){
-    	this.spotifyCallback();
+        spotifyCallback().then(res => window.location.href = res);
     	this.props.onLogin('aw','dad','adw');
     }
     //Reset error text and other stuffs
     handleBlurUserName(){
-    	this.props.checkIfExist( false );
+    	this.props.noValidation();
     }
-    handleFocusUserName(event){
-    	this.handleUsernameValidation(event,this.state.userNameState);
+    handleFocusUserName(){
+    	this.handleUsernameValidation( this.state.userNameState );
     }
 
     handleBlurPassword(){
-    	this.setState( {errorTextPassword: '' } );
+        this.props.noValidation();
     }
     handleFocusPassword(event){
     	this.handlePasswordValidation(event, this.state.passwordState);
@@ -140,22 +102,22 @@ class LoginView extends React.Component {
     						floatingLabelText="Username"
     						errorText={this.props.userError}
     						onBlur={ () => this.handleBlurUserName() }
-    						onFocus={ ( event ) => this.handleFocusUserName( event ) }
+    						onFocus={ () => this.handleFocusUserName() }
     						onChange={
     							(event, newValue) =>
-    								this.handleUsernameValidation(event, newValue)
+    								this.handleUsernameValidation( newValue )
     						}
     					/>
     					<br/>
     					<TextField
     						hintText="Enter your Password"
     						floatingLabelText="Password"
-    						errorText={this.state.errorTextPassword}
+    						errorText={this.props.passwordError}
     						onBlur={ () => this.handleBlurPassword() }
     						onFocus={ ( event ) => this.handleFocusPassword( event ) }
     						onChange={
     							(event, newValue) =>
-    								this.handlePasswordValidation(event, newValue)
+    								this.handlePasswordValidation( event, newValue )
     						}/>
     					<br/>
     					<RaisedButton
@@ -170,17 +132,15 @@ class LoginView extends React.Component {
     		</div>
     	);
     }
-
 }
-
 const style = {
 	margin: 15,
 };
 LoginView.propTypes = {
 	onLogin: PropTypes.func.isRequired,
-	checkIfExist: PropTypes.func.isRequired,
-	users: PropTypes.object.isRequired,
-	userValid: PropTypes.bool.isRequired,
-	userError: PropTypes.string.isRequired
+    validationCheck: PropTypes.func.isRequired,
+    noValidation: PropTypes.func,
+	userError: PropTypes.string.isRequired,
+    passwordError: PropTypes.string.isRequired
 };
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(LoginView));

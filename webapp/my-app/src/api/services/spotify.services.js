@@ -24,3 +24,14 @@ export const spotifyTokens = async( code ) => {
 
 	return retrieveStringFromArray(responseToString);
 };
+
+export const spotifyCallback = async() => {
+    return await fetch(spotify.callBackUri())
+        .then(function (response) {
+            if(!response.ok){
+                return Promise.reject(response.statusText).json();
+            }else{
+                return Promise.resolve(response.text());
+            }
+        });
+};
