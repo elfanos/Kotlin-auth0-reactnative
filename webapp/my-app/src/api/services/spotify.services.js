@@ -1,6 +1,7 @@
 
 import React from 'react';
 import * as spotify from '../backend.api.constants/spotify.api.constants';
+import { responseResolvedAsText } from '../controller/api.response.controller';
 const REGEX_STRING_ARRAY = /["\]']+/gi;
 
 const retrieveStringFromArray = ( stringArray ) => {
@@ -34,4 +35,16 @@ export const spotifyCallback = async() => {
                 return Promise.resolve(response.text());
             }
         });
+};
+
+export const getCurrentUserData = async( accessToken ) => {
+	return JSON.parse( await
+		fetch(spotify.currentUserData(accessToken))
+			.then(function (response) {
+                if(!response.ok){
+                    return Promise.reject(response.statusText).json();
+                }else{
+                    return Promise.resolve(response.text());
+                }
+            }));
 };

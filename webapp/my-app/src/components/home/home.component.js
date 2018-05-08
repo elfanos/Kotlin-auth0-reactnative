@@ -11,9 +11,9 @@ const mapStateToProps = (state) => {
 
 	console.log( state );
 	return {
-		isLoggedIn: state.auth.isLoggedIn,
-		username: state.auth.username,
-		code: state.auth.code,
+		isLoggedIn: state.user.isLoggedIn,
+		username: state.user.username,
+		email: state.user.email,
 		accessToken: state.user.accessToken,
 		refreshToken: state.user.refreshToken
 	};
@@ -27,14 +27,13 @@ const mapDispatchToProps = ( dispatch ) => {
 
 class HomeView extends React.Component {
 	componentDidMount() {
-		// let bajs = Modules.spotifyTokens(this.props.code);
-		// console.log(bajs);
+
 	}
 	render() {
 		return (
 			<div>
 				<p>
-                    code?={this.props.code}
+                    email?={this.props.email}
 					<br/>
                     username?={this.props.username}
 					<br/>
@@ -52,8 +51,7 @@ class HomeView extends React.Component {
 HomeView.propTypes = {
 	isLoggedIn: PropTypes.bool.isRequired,
 	username: PropTypes.string,
-	code: PropTypes.string,
-	token: PropTypes.string,
+	email: PropTypes.string,
 	initializeUser: PropTypes.func,
 	accessToken: PropTypes.string,
 	refreshToken: PropTypes.string

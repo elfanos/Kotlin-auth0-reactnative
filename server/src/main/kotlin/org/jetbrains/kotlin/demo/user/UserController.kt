@@ -1,9 +1,15 @@
 package org.jetbrains.kotlin.demo.user
 
 import com.mashape.unirest.http.Unirest
+import jdk.nashorn.internal.ir.RuntimeNode
 import org.jetbrains.kotlin.demo.auth0.HTTPHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  *@author Rasmus Dahlkvist
  */
@@ -25,11 +31,20 @@ class UserController {
         fun getAllUsers() : List<User> =
                 userService.getAllUsers()
 
+        @PostMapping(path = ["api/user"])
+        fun postUserWithMail( @RequestBody user: NewUser): User {
+            return User(
+                    Id = "",
+                    email = user.email
+
+            )
+        }
+
     }
 
     class UserPostController{
 
-        @PostMapping(path = arrayOf("user"))
+        @PostMapping(path = ["user"])
         fun postUser( @RequestBody user: NewUser): User {
             return User(
                     Id = "",
@@ -37,6 +52,7 @@ class UserController {
                     password = user.password
             )
         }
+
     }
 
     fun getHttpsDomain( domain: String ): String {

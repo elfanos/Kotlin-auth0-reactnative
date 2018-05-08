@@ -12,7 +12,11 @@ import { spotifyCallback } from '../../../api/services/spotify.services';
 import FontAwesome from 'react-fontawesome';
 import * as validation from '../../../states/constants/validation.constant';
 import { getSpecificValueFromPromise } from '../../../prototypes/api.data.prototype';
-import {validationUsername, validationPassword, getExistingUserNames } from '../controller/login.controller';
+import {
+	validationUsername,
+	validationPassword,
+	getExistingUserNames
+} from '../controller/login.controller';
 
 const passwordValidation = new RegExp('^(?=.{8,})(?=.*[0-9])');
 

@@ -4,7 +4,8 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import queryString from 'query-string';
 import { initialize } from '../../states/actions/user.action';
-import { spotifyTokens } from '../services/spotify.services';
+import { spotifyTokens, getCurrentUserData } from '../services/spotify.services';
+import { getSpecificValueFromPromise } from '../../prototypes/api.data.prototype';
 
 const mapStateToProps = ( state ) => {
 	console.log( state );
@@ -13,31 +14,38 @@ const mapStateToProps = ( state ) => {
 		password: state.auth.password
 	};
 };
-
-let addTokenToUser = async( parsed ) => {
-	let tokens = await spotifyTokens( parsed.code )
-		.then(function (response) {
-			if(response.accessToken === undefined
+let initializeUserData = async( parsed ) => {
+	let userData = {};
+	userData.token = await spotifyTokens( parsed.code )
+        .then(function (response) {
+            if(response.accessToken === undefined
                 && response.refreshToken === undefined){
 
-				return Promise.reject(
-					new Error('accessToken or refresh ' +
+                return Promise.reject(
+                    new Error('accessToken or refresh ' +
                         'token not retrieved')
-				);
-			}else{
-				return response;
-			}
-		});
-	console.log( tokens );
-	return tokens;
-};
+                );
+            }else{
+                return Promise.resolve(response);
+            }
+        });
 
+	userData.token.accessToken = userData.token.accessToken.slice(1);
+	let currentUser = await getCurrentUserData( userData.token.accessToken )
+		.then(data => data).catch(error => error);
+	userData.email = currentUser.email;
+	userData.name = currentUser.displayName;
+	return userData;
+
+};
 class SpotifyAuth extends React.Component{
 	componentDidMount(){
 		let parsed = queryString.parse(this.props.location.search);
-		this.props.dispatch(
-			initialize(
-				this.props.username, 'email', addTokenToUser(parsed)
+        initializeUserData(parsed).then(data =>
+			this.props.dispatch(
+                initialize(
+                    data.name, data.email, data.token
+                )
 			)
 		);
 	}

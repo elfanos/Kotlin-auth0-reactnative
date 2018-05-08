@@ -8,3 +8,10 @@ export const responseResolvedAsJson = ( response ) => {
         return response.json();
     }
 };
+export const responseResolvedAsText = ( response ) => {
+    if(!response.ok){
+        return Promise.reject(response.statusText).json();
+    }else{
+        return response.text;
+    }
+};

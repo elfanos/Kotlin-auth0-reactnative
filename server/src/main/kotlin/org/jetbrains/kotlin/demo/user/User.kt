@@ -14,10 +14,12 @@ data class User (
     @Id private val Id: String? = null,
 
     var userName: String? = null,
-    private var password: String? = null
+    private var password: String? = null,
+    private var email: String? = null
 )
 // New data class for incoming comments
 data class NewUser @JsonCreator constructor(
         var userName: String? = null,
-        var password: String? = null
+        var password: String? = null,
+        var email: String? = null
 )

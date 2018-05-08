@@ -7,6 +7,7 @@ import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredential
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest
+import sun.net.www.content.text.Generic
 import java.io.IOException
 import java.util.concurrent.Future
 
@@ -119,5 +120,16 @@ class InitSpotifyACFService : SpotifyACFService {
         }
         return null
     }
+
+}
+
+interface SpotifyAuthorization {
+     fun requestAuthorization(accessToken: String?): SpotifyApi
+}
+
+class InitSpotifyAuthorization: SpotifyAuthorization {
+
+    override fun requestAuthorization(accessToken: String?): SpotifyApi =
+            SpotifyApi.Builder().setAccessToken(accessToken).build()
 
 }
